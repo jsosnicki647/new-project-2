@@ -1,4 +1,4 @@
-const connection = require("../../config/db_config")
+const connection = require("./config/db_config")
 
 const orm = {
     selectTopTen: (cb) => {

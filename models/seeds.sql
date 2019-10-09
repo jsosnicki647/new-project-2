@@ -1,19 +1,19 @@
 use bucket_besties_db;
 
 
-insert into Users(firstName, lastName, username, email, lat, lon, surveyQ1, surveyQ2, surveyQ3, surveyQ4, surveyQ5)
+insert into Users(firstName, lastName, username, email, lat, lon, zip)
 values('test', 'user001', 'testuser001', 'testuser001@gmail.com', '40.822', '-74.238', '07042');
 
-insert into Users(firstName, lastName, username, email, lat, lon, surveyQ1, surveyQ2, surveyQ3, surveyQ4, surveyQ5)
+insert into Users(firstName, lastName, username, email, lat, lon, zip)
 values('test', 'user002', 'testuser002', 'testuser002@gmail.com', '40.825', '-74.109', '07070');
 
-insert into Users(firstName, lastName, username, email, lat, lon, surveyQ1, surveyQ2, surveyQ3, surveyQ4, surveyQ5)
+insert into Users(firstName, lastName, username, email, lat, lon, zip)
 values('test', 'user003', 'testuser003', 'testuser003@gmail.com', '40.840', '-74.200', '07030');
 
-insert into Users(firstName, lastName, username, email, lat, lon, surveyQ1, surveyQ2, surveyQ3, surveyQ4, surveyQ5)
+insert into Users(firstName, lastName, username, email, lat, lon, zip)
 values('test', 'user004', 'testuser004', 'testuser004@gmail.com', '40.755', '-74.068', '07073');
 
-insert into Users(firstName, lastName, username, email, lat, lon, surveyQ1, surveyQ2, surveyQ3, surveyQ4, surveyQ5)
+insert into Users(firstName, lastName, username, email, lat, lon, zip)
 values('test', 'user005', 'testuser005', 'testuser005@gmail.com', '40.731', '-74.173', '07041');
 
 
