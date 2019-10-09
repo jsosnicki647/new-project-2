@@ -7,8 +7,8 @@ module.exports = function(sequelize, DataTypes) {
         userID: DataTypes.INTEGER,
         activityID: DataTypes.INTEGER,
         completeByDate: DataTypes.STRING,
-        completed: DataTypes.BOOLEAN
-
+        completed: DataTypes.BOOLEAN,
+        completedOnDate: DataTypes.STRING
     },
     {
         timestamps: false,

@@ -9,10 +9,10 @@ module.exports = function (app) {
   app.get("/api/useritems", (req, res) => orm.selectAUsersItems(req.body.userID, req.body.isComplete, (data) => res.json(data)))
 
   //get data for a specific user
-  app.get("/api/user", (req, res) => orm.selectUser(req.body.userID, (data) => res.json(data)))
+  app.get("/api/user/", (req, res) => orm.selectUser(req.body.userID, (data) => res.json(data)))
 
   //find nearby users with one of your bucket list items
-  app.get("/api/nearbyusers", (req, res) => orm.nearbyUsersWithSameInterests(req.body.userID, req.body.activityID, (data) => res.json(data))) 
+  app.get("/api/nearbyusers/:uID/:aID", (req, res) => orm.nearbyUsersWithSameInterests(req.params.uID, req.params.aID, (data) => res.json(data))) 
 
   // add new user
   app.post("/api/adduser", (req, res) => {
@@ -64,8 +64,14 @@ module.exports = function (app) {
   // mark activity as complete
   app.put("/api/complete/", (req, res) => {
     // console.log(req.body);
+    var today = new Date()
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = today.getFullYear();
+    today = yyyy + '-' + mm + '-' + dd;
     db.Bridge.update({
-        completed: 1
+        completed: 1,
+        completedOnDate: today
       }, {
         where: {
           userID: req.body.userID,
@@ -73,6 +79,7 @@ module.exports = function (app) {
         }
       })
       .then((data) => {
+    console.log("today: " + today)
         res.json(data)
       })
   })

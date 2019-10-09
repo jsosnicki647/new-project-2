@@ -16,10 +16,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-    <script src="../../public/js/bucket.js"></script>
+        <script src="../../public/js/moment.js"></script>
+
 </head>
 
 <body>
@@ -33,12 +37,15 @@
 
 <script>
     $(document).ready(() => {
+
         $(".complete").on("click", (e) => {
             let id = $(e.target).data("id")
             $.put('/api/complete', {
                 'userID': 2,
-                'activityID': id
+                'activityID': id,
+
             }, (result) => {
+                console.log(result)
                 location.reload()
             })
         })
@@ -58,7 +65,41 @@
             }
         })
 
-        $(".add-item-btn").on("click", () => $("#results-modal").modal("toggle"))
+        $(".add-item-btn").on("click", () => {
+            $("#results-modal").modal("toggle")
+        })
+
+        $(function(){
+            $("#datepicker").datepicker()
+        })
+
+        $("#new-item-submit").on("click", (e) => {
+            e.preventDefault()
+            let date = $("#datepicker").val().trim()
+            let deadline = date.substring(6,10) + "-" + date.substring(0,2) + "-" + date.substring(3,5)
+
+            let newItem = {
+                userid: 2,
+                item: $("#item-input").val().trim(),
+                type: $("#category-select").val().trim(),
+                deadline: deadline
+            }
+            console.log(newItem)
+            $.post("/api/newitem", newItem, (data) => {
+                console.log(data)
+                $("#results-modal").modal("toggle")
+                location.reload()
+            })
+        })
+
+        $(".find-friend").on("click", (e) => {
+            let id = $(e.target).data("id")
+            console.log(id)
+            $.ajax({
+                url:"/api/nearbyusers/2/" + id,
+                method: "GET"
+            }).then((result) => console.log(result))
+        })
 
     })
 

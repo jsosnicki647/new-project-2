@@ -9,7 +9,7 @@ const orm = {
         })
     },
     selectAUsersItems: (id, cb) => {
-        let statement = "SELECT activityID, a.activityDescription, b.completeByDate, b.completed FROM bridge as b LEFT JOIN activities as a on a.id = b.activityID WHERE b.userID = " + id + " ORDER BY completeByDate"
+        let statement = "SELECT activityID, a.activityDescription, b.completeByDate, b.completed, b.completedOnDate FROM bridge as b LEFT JOIN activities as a on a.id = b.activityID WHERE b.userID = " + id + " ORDER BY completeByDate"
         connection.query(statement, (err, data) => {
             if (err) throw err
             cb(data)        
@@ -23,6 +23,7 @@ const orm = {
         })
     },
     selectUser: (userID, cb) => {
+        console.log("UID: " + userID)
         let statement = "SELECT firstName, lastName, userName, zip, lat, lon FROM users WHERE id = " +  userID
         connection.query(statement, (err, data) => {
             if (err) throw err
