@@ -2,7 +2,7 @@ const connection = require("./config/db_config")
 
 const orm = {
     selectTopTen: (cb) => {
-        let statement = "SELECT a.activityDescription, COUNT(activityID) as 'count', b.activityID FROM bridge as b LEFT JOIN activities as a on b.activityID = a.ID GROUP BY activityID ORDER BY 2 DESC, 1 ASC LIMIT 10"
+        let statement = "SELECT a.activityDescription, a.category, COUNT(activityID) as 'count', b.activityID FROM bridge as b LEFT JOIN activities as a on b.activityID = a.ID GROUP BY activityID ORDER BY 3 DESC, 1 ASC LIMIT 10"
         connection.query(statement, (err, data) => {
             if (err) throw err
             cb(data)
@@ -44,6 +44,13 @@ const orm = {
                 data2.sort((a, b) => (a.distance > b.distance) ? 1 : -1)
                 cb(data2)
             })
+        })
+    },
+    getEmail: (userName, cb) => {
+        let statement = "SELECT firstName, email FROM users WHERE userName = '" + userName + "'"
+        connection.query(statement, (err, data) => {
+            if (err) throw err
+            cb(data)
         })
     }
 }

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Bucket Besties</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
@@ -22,13 +22,21 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-        <script src="../../public/js/moment.js"></script>
     <style>
+        #jumbo-container{
+            background-color: black;
+            color: white;
+            margin: 0 18em;
+            opacity: .85;
+        }
         .more-margin{
             margin: 0 .25em .25em 0;
         }
         .list-btn{
             width: 8em;
+        }
+        .jumbotron{
+            background-image: url(https://i.ytimg.com/vi/AV48vINy134/maxresdefault.jpg);
         }
         textarea{
             width: 25em;
@@ -38,9 +46,11 @@
 
 <body>
     <div class="jumbotron">
-        <h1 class="display-4 text-center">Bucket Besties!</h1>
-        <p class="lead text-center">Grab a bestie and explore the world... before it's too late!</p>
-        <p id="username" class="text-center"></p>
+        <div id="jumbo-container">
+            <h1 class="display-4 text-center">Bucket Besties!</h1>
+            <p class="lead text-center">Grab a bestie and explore the world... before it's too late!</p>
+            <p id="username" class="text-center"></p>
+        </div>
     </div>
 
     {{{body}}}
@@ -52,6 +62,8 @@
             url:"/api/user/2",
             method: "GET"
         }).then((result) => $("#username").html("Welcome " + result[0].userName))
+
+        
 
         $(".complete").on("click", (e) => {
             let id = $(e.target).data("id")
@@ -109,6 +121,7 @@
 
         $(".find-friend").on("click", (e) => {
             let id = $(e.target).data("id")
+            var activity = $(e.target).data("activity")
             console.log(id)
             $("#friends").html("")
             $.ajax({
@@ -121,7 +134,7 @@
                 }
                 else{
                     for (i=0; i<result.length; i++){
-                        let html = '<li><button data-user="' + result[i].userName + '" class="more-margin contact btn btn-info btn-sm">Contact </button>' + result[i].userName + ": " + result[i].distance.toFixed(2) + ' miles </li>'
+                        let html = '<li><button data-activity="' + activity + '" data-user="' + result[i].userName + '" class="more-margin contact btn btn-info btn-sm">Contact </button>' + result[i].userName + ": " + result[i].distance.toFixed(2) + ' miles </li>'
                         $("#friends").append(html)
                     }
                     $(".contact").on("click", (e) => {
@@ -130,14 +143,56 @@
                         $("#contact-modal").modal("toggle")
                         let friend = $(e.target).data("user")
                         $("#to-friend").val(friend)
+                        $("#interest").val($(e.target).data("activity"))
                     })
                 }
                 $("#friends-modal").modal("toggle")
             })
         })
 
+        $(".add-from-pop").on("click", (e) => {
+            alert($(e.target).data("activity"))
+            alert($(e.target).data("category"))
+            let newItem = {
+                userid: 2,
+                item: $(e.target).data("activity"),
+                type: $(e.target).data("category"),
+                deadline: "2019-12-31"
+            }
+
+            $.post("/api/newitem", newItem, (data) => {
+                console.log(data)
+                location.reload()
+            })
+        })
         
-        
+        $("#send-email").on("click", (e) => {
+            e.preventDefault()
+            let toUser = $("#to-friend").val()
+            
+            $.ajax({
+                url:"/api/email/" + toUser,
+                method: "GET"
+            })
+            .then((result) => {
+                let newEmail = {
+                    fromUser: "logged-in user",
+                    email: result[0].email,
+                    name: result[0].firstName,
+                    message: $("#email-message").val(),
+                    interest: $("#interest").val()
+                }
+
+                $.post("/form", newEmail).then((data) => {
+                    if (data = "it's okay"){
+                        $("#interest").val("")
+                        $("#to-friend").val("")
+                        $("#email-message").val("")
+                        $("#contact-modal").modal("toggle")
+                    }
+                })
+            })
+        })
 
     })
 

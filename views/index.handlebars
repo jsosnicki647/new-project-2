@@ -1,7 +1,9 @@
 <div class="row">
     <div class="col-6">
-        <h2>My Bucket List <button class="add-item-btn btn btn-primary">Add</button></h2>
-        <table class="table">
+        <div class="d-flex justify-content-center">
+            <h2>My Bucket List <button class="add-item-btn btn btn-primary">Add</button></h2>
+        </div>
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -17,7 +19,7 @@
                     <th scope="row">{{inc @index}}</th>
                     <td>{{activityDescription}}</td>
                     <td>{{completeByDate}}</td>
-                    <td><button data-id="{{activityID}}" class="complete more-margin list-btn btn btn-success btn-sm">complete!</button> <button data-id="{{activityID}}" class="find-friend more-margin list-btn btn btn-sm btn-dark">Find a Friend!</button></td>
+                    <td><button data-id="{{activityID}}" class="complete more-margin list-btn btn btn-success btn-sm">complete!</button> <button data-id="{{activityID}}" data-activity="{{activityDescription}}" class="find-friend more-margin list-btn btn btn-sm btn-dark">Find a Friend!</button></td>
                 </tr>
                 {{/unless}}
                 {{/each}}
@@ -25,8 +27,10 @@
         </table>
         <br>
         <hr>
-        <h2>Completed Items</h2>
-        <table class="table">
+        <div class="d-flex justify-content-center">
+            <h2>Completed Items</h2>
+        </div>
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -48,8 +52,10 @@
         </table>
     </div>
     <div class="col-6">
-        <h2>Popular Bucket List Items</h2>
-        <table class="table">
+        <div class="d-flex justify-content-center">
+            <h2>Popular Bucket List Items</h2>
+        </div>
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -61,7 +67,7 @@
                 {{#each topitems}}
                 <tr>
                     <th scope="row">{{inc @index}}</th>
-                    <td>{{activityDescription}}</td>
+                    <td><button class="add-from-pop btn btn-primary btn-sm more-margin" data-activity="{{activityDescription}}", data-category="{{category}}">Add</button>{{activityDescription}}</td>
                     <td>{{count}}</td>
                 </tr>
                 {{/each}}
@@ -138,15 +144,17 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">To:</label>
+                        <label for="to-friend">To:</label>
                         <input id="to-friend" type="text" class="form-control">
+                        <label for="interest">Interest:</label>
+                        <input id="interest" type="text" class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Message:</label>
                         <br>
-                        <textarea></textarea>
+                        <textarea id="email-message"></textarea>
                     </div>
-                    <button id="new-item-submit" type="submit" class="btn btn-primary">Send</button>
+                    <button id="send-email" type="submit" class="btn btn-primary">Send</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 </form>
             </div>

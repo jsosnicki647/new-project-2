@@ -14,6 +14,7 @@ module.exports = function (app) {
   //find nearby users with one of your bucket list items
   app.get("/api/nearbyusers/:uID/:aID", (req, res) => orm.nearbyUsersWithSameInterests(req.params.uID, req.params.aID, (data) => res.json(data))) 
 
+  app.get("/api/email/:id", (req, res) => orm.getEmail(req.params.id, (data) => res.json(data)))
   // add new user
   app.post("/api/adduser", (req, res) => {
     db.Users.create({

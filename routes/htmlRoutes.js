@@ -30,19 +30,19 @@ module.exports = function(app) {
 
 // nodemailer
 
-app.post("/form", (req, res, next) => {
+app.post("/form", (req, res) => {
 
   var email = req.body.email;
-  
+  var message = req.body.message
   var name = req.body.name;
   
-  console.log(email, name)
+  console.log("email: " + email, "name: " + name)
   
   const output =`<p> You have a new contact request </p>
       <P> 😎Thank you for joing the squad 😎</p>
-      <ul>     
-      <li>Name: ${req.body.name}</li>
-      <li>email: ${req.body.email}</il>
+      <p>From: ${req.body.fromUser}</p>
+      <p>Interest: ${req.body.interest}</p>
+      <p>${req.body.message}</p>
       </ul>`;
   
   const nodemailer = require('nodemailer');
@@ -51,15 +51,15 @@ app.post("/form", (req, res, next) => {
       service : "gmail",
   
       auth: {
-          user: process.env.EMAIL,
-          pass: process.env.PASSWORD
+          user: "bucketlistusa271@gmail.com",
+          pass: "bucketlist123456789"
       }
   });
   
   
   
   let mailoptions  = {
-      from: process.env.EMAIL, // sender address
+      from: "bucketlistusa271@gmail.com", // sender address
       to: `${email}`, // list of receivers
       subject: 'registration ✔', // Subject line
       text: `Hey ${name}`, // plain text body
@@ -73,6 +73,6 @@ app.post("/form", (req, res, next) => {
   });
   
   
-  // res.send("its okay")
+    res.send("its okay")
   })
 };
