@@ -23,7 +23,11 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
         <script src="../../public/js/moment.js"></script>
-
+    <style>
+        .more-margin{
+            margin: 0 .25em .25em 0;
+        }
+    </style>
 </head>
 
 <body>
@@ -95,11 +99,25 @@
         $(".find-friend").on("click", (e) => {
             let id = $(e.target).data("id")
             console.log(id)
+            $("#friends").html("")
             $.ajax({
                 url:"/api/nearbyusers/2/" + id,
                 method: "GET"
-            }).then((result) => console.log(result))
+            }).then((result) => {
+                if(result.length == 0){
+                    let html = "No friends found!"
+                    $("#friends").append(html)
+                }
+                else{
+                    for (i=0; i<result.length; i++){
+                        let html = '<li><button class="more-margin contact btn btn-info btn-sm">Contact </button>' + result[i].userName + ": " + result[i].distance.toFixed(2) + ' miles </li>'
+                        $("#friends").append(html)
+                    }
+                }
+                $("#friends-modal").modal("toggle")
+            })
         })
+
 
     })
 
