@@ -27,6 +27,12 @@
         .more-margin{
             margin: 0 .25em .25em 0;
         }
+        .list-btn{
+            width: 8em;
+        }
+        textarea{
+            width: 25em;
+        }
     </style>
 </head>
 
@@ -34,6 +40,7 @@
     <div class="jumbotron">
         <h1 class="display-4 text-center">Bucket Besties!</h1>
         <p class="lead text-center">Grab a bestie and explore the world... before it's too late!</p>
+        <p id="username" class="text-center"></p>
     </div>
 
     {{{body}}}
@@ -41,6 +48,10 @@
 
 <script>
     $(document).ready(() => {
+        $.ajax({
+            url:"/api/user/2",
+            method: "GET"
+        }).then((result) => $("#username").html("Welcome " + result[0].userName))
 
         $(".complete").on("click", (e) => {
             let id = $(e.target).data("id")
@@ -110,14 +121,23 @@
                 }
                 else{
                     for (i=0; i<result.length; i++){
-                        let html = '<li><button class="more-margin contact btn btn-info btn-sm">Contact </button>' + result[i].userName + ": " + result[i].distance.toFixed(2) + ' miles </li>'
+                        let html = '<li><button data-user="' + result[i].userName + '" class="more-margin contact btn btn-info btn-sm">Contact </button>' + result[i].userName + ": " + result[i].distance.toFixed(2) + ' miles </li>'
                         $("#friends").append(html)
                     }
+                    $(".contact").on("click", (e) => {
+                        e.preventDefault()
+                        $("#friends-modal").modal("toggle")
+                        $("#contact-modal").modal("toggle")
+                        let friend = $(e.target).data("user")
+                        $("#to-friend").val(friend)
+                    })
                 }
                 $("#friends-modal").modal("toggle")
             })
         })
 
+        
+        
 
     })
 

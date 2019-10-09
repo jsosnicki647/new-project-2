@@ -27,6 +27,7 @@ userID int not null,
 activityID int not null,
 completeByDate date,
 completed boolean default false,
+completedOnDate date,
 foreign key (userID) references users(id),
 foreign key (activityID) references activities(id),
 primary key(id)
