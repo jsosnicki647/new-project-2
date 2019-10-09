@@ -2,18 +2,16 @@ const connection = require("./config/db_config")
 
 const orm = {
     selectTopTen: (cb) => {
-        let statement = "SELECT a.activityDescription, COUNT(activityID) as 'count' FROM bridge as b LEFT JOIN activities as a on b.activityID = a.ID GROUP BY activityID ORDER BY 2 DESC, 1 ASC LIMIT 10"
+        let statement = "SELECT a.activityDescription, COUNT(activityID) as 'count', b.activityID FROM bridge as b LEFT JOIN activities as a on b.activityID = a.ID GROUP BY activityID ORDER BY 2 DESC, 1 ASC LIMIT 10"
         connection.query(statement, (err, data) => {
             if (err) throw err
-            console.log(data)
             cb(data)
         })
     },
-    selectAUsersItems: (id, isComplete, cb) => {
-        let statement = "SELECT activityID, a.activityDescription, b.completeByDate FROM bridge as b LEFT JOIN activities as a on a.id = b.activityID WHERE b.userID = " + id + " and completed = " + isComplete + " ORDER BY completeByDate"
+    selectAUsersItems: (id, cb) => {
+        let statement = "SELECT activityID, a.activityDescription, b.completeByDate, b.completed FROM bridge as b LEFT JOIN activities as a on a.id = b.activityID WHERE b.userID = " + id + " ORDER BY completeByDate"
         connection.query(statement, (err, data) => {
             if (err) throw err
-            console.log(data)
             cb(data)        
         })
     },
@@ -21,7 +19,6 @@ const orm = {
         let statement = "INSERT INTO bridge (userID, activityID, completeByDate) VALUES (?,?,?)"
         connection.query(statement, [userID, activityID, completeBy], (err, data) => {
             if (err) throw err
-            console.log(data)
             cb(data)
         })
     },
@@ -29,7 +26,6 @@ const orm = {
         let statement = "SELECT firstName, lastName, userName, zip, lat, lon FROM users WHERE id = " +  userID
         connection.query(statement, (err, data) => {
             if (err) throw err
-            console.log(data)
             cb(data)
         })
     },
@@ -45,7 +41,6 @@ const orm = {
                     data2[i].distance = getDistanceFromLatLonInMi(data2[i].lat, data2[i].lon, userLat, userLon)
                 }
                 data2.sort((a, b) => (a.distance > b.distance) ? 1 : -1)
-                console.log(data2)
                 cb(data2)
             })
         })

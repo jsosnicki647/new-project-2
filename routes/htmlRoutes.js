@@ -6,7 +6,7 @@ module.exports = function(app) {
 
   app.get("/", (req, res) => {
     let hbsobj = {}
-    orm.selectAUsersItems(5, false, (myItemsData) => {
+    orm.selectAUsersItems(2, (myItemsData) => {
       hbsobj.myitems = myItemsData
       orm.selectTopTen((topItemsData) => {
         hbsobj.topitems = topItemsData  

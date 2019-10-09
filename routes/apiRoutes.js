@@ -24,11 +24,6 @@ module.exports = function (app) {
         zip: req.body.zip,
         lat: req.body.lat,
         lon: req.body.lon
-        // surveyQ1: req.body.surveyQ1,
-        // surveyQ2: req.body.surveyQ2,
-        // surveyQ3: req.body.surveyQ3,
-        // surveyQ4: req.body.surveyQ4,
-        // surveyQ5: req.body.surveyQ5
       })
       .then((data) => res.json(data))
   })
@@ -68,7 +63,7 @@ module.exports = function (app) {
   
   // mark activity as complete
   app.put("/api/complete/", (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     db.Bridge.update({
         completed: 1
       }, {
@@ -78,7 +73,6 @@ module.exports = function (app) {
         }
       })
       .then((data) => {
-        console.log(data);
         res.json(data)
       })
   })
