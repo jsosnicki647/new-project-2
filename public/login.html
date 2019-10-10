@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Login</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	
+</head>
+<body>
+	
+	<!-- LOGIN FORM 'Page' -->
+	<form style="width:500px;margin:0 auto;margin-top:40px; " id="loginForm">
+
+		
+
+		<h2 style="text-align:center;">Login</h2>
+
+		<div class="alert alert-danger" id="dangerDiv" role="alert" style="display:none;">
+	  		<p id="errorMsg"></p>
+		</div>
+
+	  <div class="form-group">
+	    <label for="exampleInputEmail1">Email address</label>
+	    <input id="emailInput" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+	    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+	  </div>
+	  <div class="form-group">
+	    <label for="exampleInputPassword1">Password</label>
+	    <input id="passwordInput" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+	  </div>
+	  
+	  <button onclick="login();return false;" type="submit" class="btn btn-primary">Submit</button>
+
+
+	  <ul class="tab-group">
+      <li class="tab active"><a href="/signup.html">Sign Up</a></li>
+      <li class="tab"><a href="/login.html">Log In</a></li>
+    </ul>
+
+	</form>
+
+
+
+	<!-- PROFILE -->
+
+	
+
+	    <ul id="profile" style="display:none;">
+	    	<h2>Profile</h2>
+	    	<li>
+	    		<label>First Name:</label>
+	    		<p id="profileFirstName"></p>
+	    	</li>
+	    	<li>
+	    		<label>Last Name:</label>
+	    		<p id="profileLastName"></p>
+	    	</li>
+	    	<li>
+	    		<label>UserName:</label>
+	    		<p id="profileUserName"></p>
+	    	</li>
+	    	<li>
+	    		<label>Zip Code:</label>
+	    		<p id="profileZipCode"></p>
+	    	</li>
+	    	<li>
+	    		<label>Email:</label>
+	    		<p id="profileEmail"></p>
+	    	</li>
+	    </ul>
+
+
+
+
+     <!-- Firebase Core JavaScript Link -->
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-analytics.js"></script>
+
+
+<script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-firestore.js"></script>
+
+ <!-- Add Firebase products that you want to use -->
+  <script src="https://www.gstatic.com/firebasejs/5.0.1/firebase-auth.js"></script>
+ <!--  <script src="/__/firebase/7.1.0/firebase-firestore.js"></script> -->
+
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyDxCQp7aTXoAlRb2nhW6lZLEEN0ZfAmo0w",
+    authDomain: "bucket-besties-51cb3.firebaseapp.com",
+    databaseURL: "https://bucket-besties-51cb3.firebaseio.com",
+    projectId: "bucket-besties-51cb3",
+    storageBucket: "bucket-besties-51cb3.appspot.com",
+    messagingSenderId: "102781488299",
+    appId: "1:102781488299:web:02c7aaf8e338862e373bee",
+    measurementId: "G-4QMLWKD7B0"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+
+
+  var db = firebase.firestore();
+
+</script>
+  </script>
+	<script type="text/javascript" src="myScript.js"></script>
+</body>
+</html>
