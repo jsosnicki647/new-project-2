@@ -37,9 +37,13 @@
         }
         .jumbotron{
             background-image: url(https://i.ytimg.com/vi/AV48vINy134/maxresdefault.jpg);
+            background-size: cover;
         }
         textarea{
             width: 25em;
+        }
+        body{
+            background-color: light-grey;
         }
     </style>
 </head>
@@ -151,8 +155,6 @@
         })
 
         $(".add-from-pop").on("click", (e) => {
-            alert($(e.target).data("activity"))
-            alert($(e.target).data("category"))
             let newItem = {
                 userid: 2,
                 item: $(e.target).data("activity"),
