@@ -52,6 +52,18 @@ const orm = {
             if (err) throw err
             cb(data)
         })
+    },
+    addUser: (id, fname, lname, uname, email, zip, lat, lon, cb) => {
+        console.log(lat)
+        console.log(lat.length)
+        lat = parseFloat(lat)
+        console.log(typeof lat)
+        let statement = "INSERT INTO users(id, firstName, lastName, userName, email, lat, lon, zip) VALUES ('" + id + "', '" + fname + "', '" + lname + "', '" + uname + "', '" + email + "', " + lat + ", " + lon + ", '" + zip +"')"
+
+        connection.query(statement, (err, data) => {
+            if (err) throw err
+            cb(data)
+        })
     }
 }
 

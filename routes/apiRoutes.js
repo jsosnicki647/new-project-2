@@ -16,18 +16,21 @@ module.exports = function (app) {
 
   app.get("/api/email/:id", (req, res) => orm.getEmail(req.params.id, (data) => res.json(data)))
   // add new user
-  app.post("/api/adduser", (req, res) => {
-    db.Users.create({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        userName: req.body.userName,
-        email: req.body.email,
-        zip: req.body.zip,
-        lat: req.body.lat,
-        lon: req.body.lon
-      })
-      .then((data) => res.json(data))
-  })
+  app.post("/api/adduser", (req, res) => orm.addUser(req.body.id, req.body.firstName, req.body.lastName, req.body.username, req.body.email, req.body.zip, req.body.lat, req.body.lon, (data) => res.json(data)))
+
+
+    // db.Users.create({
+    //     id: req.body.id,
+    //     firstName: req.body.firstName,
+    //     lastName: req.body.lastName,
+    //     userName: req.body.userName,
+    //     email: req.body.email,
+    //     zip: req.body.zip,
+    //     lat: req.body.lat,
+    //     lon: req.body.lon
+    //   })
+    //   .then((data) => res.json(data))
+  
 
   // add new item to bucket list
   app.post("/api/newitem", (req, res) => {

@@ -3,7 +3,7 @@ create database bucket_besties_db;
 use bucket_besties_db;
 
 create table users(
-id int auto_increment,
+id varchar(100),
 firstName varchar(100) not null,
 lastName varchar(100) not null,
 userName varchar(100) not null,
