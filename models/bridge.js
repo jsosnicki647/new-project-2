@@ -4,7 +4,7 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.INTEGER,
             primaryKey: true
         },
-        userID: DataTypes.INTEGER,
+        userID: DataTypes.TEXT,
         activityID: DataTypes.INTEGER,
         completeByDate: DataTypes.STRING,
         completed: DataTypes.BOOLEAN,

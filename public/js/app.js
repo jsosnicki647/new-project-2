@@ -1,76 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Bucket Besties</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/6.3.5/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-firestore.js"></script>
-    <script src="https://cdn.firebase.com/libs/geofire/5.0.1/geofire.min.js"></script>
-    <style>
-        
-        #jumbo-container{
-
-            background-color: black;
-            color: white;
-            margin: 0 18em;
-            opacity: .85;
-        }
-        #hide{
-            display: none;
-        }
-        .more-margin{
-            margin: 0 .25em .25em 0;
-        }
-        .list-btn{
-            width: 8em;
-        }
-        .jumbotron{
-            background-image: url(https://i.ytimg.com/vi/AV48vINy134/maxresdefault.jpg);
-            background-size: cover;
-        }
-        textarea{
-            width: 25em;
-        }
-        body{
-            background-color: light-grey;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="jumbotron">
-        <div id="jumbo-container">
-            <h1 class="display-4 text-center">Bucket Besties!</h1>
-            <p class="lead text-center">Grab a bestie and explore the world... before it's too late!</p>
-            <p id="username" class="text-center"></p>
-        </div>
-    </div>
-
-    {{{body}}}
-</body>
-<script>
+  console.log("HELLO")
   
+  require('dotenv').config()
     const firebaseConfig = {
         apiKey: process.env.FB_KEY,
         authDomain: "bucket-besties.firebaseapp.com",
@@ -99,6 +29,7 @@
 
 
     $(document).ready(() => {
+        
 
         $("#check").on("click", () => {
             if (document.getElementById("check").checked){
@@ -121,7 +52,7 @@
                     console.log(e.code)
                 })
 
-                var queryURL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + $("#zip") + "&key=AIzaSyAidckZDfScayrad0X24a9nUStcfP_OvHc"
+                var queryURL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + $("#zip") + "&key=" + process.env.API_KEY
 
                 $.ajax({
                     url: queryURL,
@@ -138,15 +69,8 @@
                 promise.catch((e) => {
                     console.log(e.code)
                 })
-                login()
             }
         })
-
-        function login(){
-            $.get("/profile/" + uid, () => window.location.href += "profile/" + uid)
-            $.get("api/user/" + uid, (data) => console.log(data))
-        }
-
 
         function register(lat, lng) {
             let newUser = {
@@ -159,12 +83,8 @@
                 lat: lat.toFixed(3),
                 lon: lng.toFixed(3)
             }
-            
-            $.post("/api/adduser", newUser, (data) => {
-                console.log("UID HERE: " + uid)
-                $.get("/profile/" + uid, () => window.location.href += "profile/" + uid)
-                $.get("/api/user/" + uid, (data) => console.log("DATA: " + data))
-            })
+
+            $.post("/api/adduser", newUser, (data) => console.log(data))
 
             
         }
@@ -178,14 +98,17 @@
             }
         })
 
-        
+        $.ajax({
+            url:"/api/user/2",
+            method: "GET"
+        }).then((result) => $("#username").html("Welcome " + result[0].userName))
 
         
 
         $(".complete").on("click", (e) => {
             let id = $(e.target).data("id")
             $.put('/api/complete', {
-                'userID': uid,
+                'userID': 2,
                 'activityID': id,
 
             }, (result) => {
@@ -223,7 +146,7 @@
             let deadline = date.substring(6,10) + "-" + date.substring(0,2) + "-" + date.substring(3,5)
 
             let newItem = {
-                userid: uid,
+                userid: 2,
                 item: $("#item-input").val().trim(),
                 type: $("#category-select").val().trim(),
                 deadline: deadline
@@ -242,7 +165,7 @@
             console.log(id)
             $("#friends").html("")
             $.ajax({
-                url:"/api/nearbyusers/" + uid + "/" + id,
+                url:"/api/nearbyusers/2/" + id,
                 method: "GET"
             }).then((result) => {
                 if(result.length == 0){
@@ -269,7 +192,7 @@
 
         $(".add-from-pop").on("click", (e) => {
             let newItem = {
-                userid: uid,
+                userid: 2,
                 item: $(e.target).data("activity"),
                 type: $(e.target).data("category"),
                 deadline: "2019-12-31"
@@ -310,7 +233,3 @@
         })
 
     })
-</script>
-
-
-</html>

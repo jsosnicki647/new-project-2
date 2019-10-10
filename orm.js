@@ -9,22 +9,24 @@ const orm = {
         })
     },
     selectAUsersItems: (id, cb) => {
-        let statement = "SELECT activityID, a.activityDescription, b.completeByDate, b.completed, b.completedOnDate FROM bridge as b LEFT JOIN activities as a on a.id = b.activityID WHERE b.userID = " + id + " ORDER BY completeByDate"
+        let statement = "SELECT activityID, a.activityDescription, b.completeByDate, b.completed, b.completedOnDate FROM bridge as b LEFT JOIN activities as a on a.id = b.activityID WHERE b.userID = '" + id + "' ORDER BY completeByDate"
         connection.query(statement, (err, data) => {
             if (err) throw err
             cb(data)        
         })
     },
     insertIntoBridgeTable: (userID, activityID, completeBy, cb) => {
+        console.log("NOW HERE!")
         let statement = "INSERT INTO bridge (userID, activityID, completeByDate) VALUES (?,?,?)"
-        connection.query(statement, [userID, activityID, completeBy], (err, data) => {
+        console.log(statement)
+        connection.query(statement,[userID, activityID, completeBy], (err, data) => {
             if (err) throw err
             cb(data)
         })
     },
     selectUser: (userID, cb) => {
         console.log("UID: " + userID)
-        let statement = "SELECT firstName, lastName, userName, zip, lat, lon FROM users WHERE id = " +  userID
+        let statement = "SELECT firstName, lastName, userName, zip, lat, lon FROM users WHERE id = '" +  userID + "'"
         connection.query(statement, (err, data) => {
             if (err) throw err
             cb(data)
@@ -34,7 +36,7 @@ const orm = {
         orm.selectUser(userID, (data1) => {
             let userLat = data1[0].lat
             let userLon = data1[0].lon
-            let statement = "SELECT userName, lat, lon, zip FROM users WHERE id in (SELECT userID FROM bridge WHERE activityID = " + activityID + " AND userID != " + userID + ")"
+            let statement = "SELECT userName, lat, lon, zip FROM users WHERE id in (SELECT userID FROM bridge WHERE activityID = " + activityID + " AND userID != '" + userID + "')"
 
             connection.query(statement, (err, data2) => {
                 if (err) throw err

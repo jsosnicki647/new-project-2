@@ -1,7 +1,7 @@
 module.exports = function(sequelize, DataTypes) {
   const users = sequelize.define("Users", {
     id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.TEXT,
       primaryKey: true
     },
     firstName: DataTypes.TEXT,
@@ -10,11 +10,7 @@ module.exports = function(sequelize, DataTypes) {
     email: DataTypes.TEXT,
     lat: DataTypes.DECIMAL,
     lon: DataTypes.DECIMAL,
-    surveyQ1: DataTypes.INTEGER,
-    surveyQ2: DataTypes.INTEGER,
-    surveyQ3: DataTypes.INTEGER,
-    surveyQ4: DataTypes.INTEGER,
-    surveyQ5: DataTypes.INTEGER,
+    zip: DataTypes.TEXT
   },
   {
     timestamps: false

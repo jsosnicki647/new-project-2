@@ -4,9 +4,10 @@ const orm = require("../orm")
 module.exports = function(app) {
   // Load index page
 
-  app.get("/profile", (req, res) => {
+  app.get("/profile/:id", (req, res) => {
     let hbsobj = {}
-    orm.selectAUsersItems(2, (myItemsData) => {
+    console.log("IDBRUH: " + req.params.id)
+    orm.selectAUsersItems(req.params.id, (myItemsData) => {
       hbsobj.myitems = myItemsData
       orm.selectTopTen((topItemsData) => {
         hbsobj.topitems = topItemsData  
