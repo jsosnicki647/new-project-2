@@ -31,8 +31,7 @@ values ("Eat baby shark", "Food");
 insert into activities(activityDescription, category)
 values ("Run a marathon", "Challenges");
 
-insert into activities(activityDescription, category)
-values ("Bungee jumping", "Thrills");
+
 
 
 
