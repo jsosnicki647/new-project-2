@@ -4,7 +4,7 @@ const orm = require("../orm")
 module.exports = function(app) {
   // Load index page
 
-  app.get("/profile/:id", (req, res) => {
+  app.get("/", (req, res) => {
     let hbsobj = {}
     console.log("IDBRUH: " + req.params.id)
     orm.selectAUsersItems(req.params.id, (myItemsData) => {
@@ -17,7 +17,7 @@ module.exports = function(app) {
     })
   })
 
-  app.get("/", (req, res) => res.render("login",{}))
+  app.get("/d", (req, res) => res.render("login",{}))
     
   // app.get("/profile", (req, res) => res.sendFile(path.join(__dirname,"../public/profile.html")))
 
