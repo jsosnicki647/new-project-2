@@ -1,8 +1,10 @@
   console.log("HELLO")
   
   require('dotenv').config()
+
+   
     const firebaseConfig = {
-        apiKey: process.env.FB_KEY,
+        apiKey: ,
         authDomain: "bucket-besties.firebaseapp.com",
         databaseURL: "https://bucket-besties.firebaseio.com",
         projectId: "bucket-besties",
@@ -29,7 +31,6 @@
 
 
     $(document).ready(() => {
-        
 
         $("#check").on("click", () => {
             if (document.getElementById("check").checked){
@@ -52,7 +53,7 @@
                     console.log(e.code)
                 })
 
-                var queryURL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + $("#zip") + "&key=" + process.env.API_KEY
+                var queryURL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + $("#zip") + "&key=AIzaSyAidckZDfScayrad0X24a9nUStcfP_OvHc"
 
                 $.ajax({
                     url: queryURL,
@@ -69,8 +70,15 @@
                 promise.catch((e) => {
                     console.log(e.code)
                 })
+                login()
             }
         })
+
+        function login(){
+            $.get("/profile/" + uid, () => window.location.href += "profile/" + uid)
+            $.get("api/user/" + uid, (data) => console.log(data))
+        }
+
 
         function register(lat, lng) {
             let newUser = {
@@ -83,8 +91,12 @@
                 lat: lat.toFixed(3),
                 lon: lng.toFixed(3)
             }
-
-            $.post("/api/adduser", newUser, (data) => console.log(data))
+            
+            $.post("/api/adduser", newUser, (data) => {
+                console.log("UID HERE: " + uid)
+                $.get("/profile/" + uid, () => window.location.href += "profile/" + uid)
+                $.get("/api/user/" + uid, (data) => console.log("DATA: " + data))
+            })
 
             
         }
@@ -98,17 +110,14 @@
             }
         })
 
-        $.ajax({
-            url:"/api/user/2",
-            method: "GET"
-        }).then((result) => $("#username").html("Welcome " + result[0].userName))
+        
 
         
 
         $(".complete").on("click", (e) => {
             let id = $(e.target).data("id")
             $.put('/api/complete', {
-                'userID': 2,
+                'userID': uid,
                 'activityID': id,
 
             }, (result) => {
@@ -146,7 +155,7 @@
             let deadline = date.substring(6,10) + "-" + date.substring(0,2) + "-" + date.substring(3,5)
 
             let newItem = {
-                userid: 2,
+                userid: uid,
                 item: $("#item-input").val().trim(),
                 type: $("#category-select").val().trim(),
                 deadline: deadline
@@ -165,7 +174,7 @@
             console.log(id)
             $("#friends").html("")
             $.ajax({
-                url:"/api/nearbyusers/2/" + id,
+                url:"/api/nearbyusers/" + uid + "/" + id,
                 method: "GET"
             }).then((result) => {
                 if(result.length == 0){
@@ -192,7 +201,7 @@
 
         $(".add-from-pop").on("click", (e) => {
             let newItem = {
-                userid: 2,
+                userid: uid,
                 item: $(e.target).data("activity"),
                 type: $(e.target).data("category"),
                 deadline: "2019-12-31"
