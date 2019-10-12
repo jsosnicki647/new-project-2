@@ -1,6 +1,7 @@
 const db = require("../models");
 const orm = require("../orm")
 const axios = require('axios')
+require('dotenv').config()
 
 module.exports = function (app) {
   //get top 10 bucket list items
@@ -18,7 +19,7 @@ module.exports = function (app) {
   app.get("/api/email/:id", (req, res) => orm.getEmail(req.params.id, (data) => res.json(data)))
   // add new user
   app.post("/api/adduser", (req, res) => {
-    var queryURL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + req.body.zip + "&key=AIzaSyAidckZDfScayrad0X24a9nUStcfP_OvHc"
+    var queryURL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + req.body.zip + "&key=" + process.env.API_KEY
     axios.get(queryURL)
     .then((response) => orm.addUser(req.body.id, req.body.firstName, req.body.lastName, req.body.userName, req.body.email, req.body.zip, response.data.results[0].geometry.location.lat.toFixed(3), response.data.results[0].geometry.location.lng.toFixed(3), (data) => res.json(data)))
   })
