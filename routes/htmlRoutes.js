@@ -18,7 +18,6 @@ module.exports = function(app) {
 
   app.get("/", (req, res) => res.render("login",{}))
     
-  // app.get("/profile", (req, res) => res.sendFile(path.join(__dirname,"../public/profile.html")))
 
   // Render 404 page for any unmatched routes
   app.get("*", function(req, res) {

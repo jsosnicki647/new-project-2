@@ -31,15 +31,10 @@ $(document).ready(() => {
     $("#log-out").on("click", (e) => {
         e.preventDefault()
         auth.signOut()
-            .then(() => {
-                $("#username").html("")
-                // $("#log-out").html("")
-                $.get("/", () => {
-                    $("#sign-up-creds").hide()
-                    $("#log-out-p").hide()
-                    window.location.href = window.location.origin
-                })
-            })
+        $("#username").html("")
+        $("#sign-up-creds").hide()
+        $("#log-out-p").hide()
+        $.get("/", () => window.location.href = window.location.origin)
     })
 
 
@@ -59,13 +54,11 @@ $(document).ready(() => {
     }
 
     function login(id) {
-        $.get("/profile/" + id, () => {
-            window.location.href += "profile/" + id
-            $.get("/api/user/" + id, ((data) => {
+        $.get("/profile/" + id, () => window.location.href += "profile/" + id)
+            .then($.get("/api/user/" + id, ((data) => {
                 $("#username").html("Welcome " + data[0].userName)
-                $("#log-out").show()
-            }))
-        })
+                $("#log-out-p").hide()
+            })))
     }
 })
 

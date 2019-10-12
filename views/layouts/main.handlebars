@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Bucket Besties</title>
-    <link href="/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="/css/reset.css" media="screen" />
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
@@ -28,15 +29,14 @@
     <style>
         
         #jumbo-container{
-
             background-color: black;
             color: white;
             margin: 0 18em;
             opacity: .85;
         }
-        #sign-up-creds{
+        #sign-up-creds, #log-out-p{
             display: none;
-        }
+        } 
         .more-margin{
             margin: 0 .25em .25em 0;
         }
@@ -91,59 +91,5 @@
     <script src="/js/auth.js"></script>
     <script src="/js/profile.js"></script>
 </body>
-<script>
-
-    
-
-        
-
-        
-
-
-        $(".add-item-btn").on("click", () => {
-            $("#results-modal").modal("toggle")
-        })
-
-        $(function(){
-            $("#datepicker").datepicker()
-        })
-
-        
-       
-
-        
-        
-        $("#send-email").on("click", (e) => {
-            e.preventDefault()
-            let toUser = $("#to-friend").val()
-            
-            $.ajax({
-                url:"/api/email/" + toUser,
-                method: "GET"
-            })
-            .then((result) => {
-                let newEmail = {
-                    fromUser: "logged-in user",
-                    email: result[0].email,
-                    name: result[0].firstName,
-                    message: $("#email-message").val(),
-                    interest: $("#interest").val()
-                }
-
-                $.post("/form", newEmail).then((data) => {
-                    if (data = "it's okay"){
-                        $("#interest").val("")
-                        $("#to-friend").val("")
-                        $("#email-message").val("")
-                        $("#contact-modal").modal("toggle")
-                    }
-                })
-            })
-        })
-
-    
-
-</script>
-
 
 </html>
