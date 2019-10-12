@@ -16,16 +16,13 @@ const orm = {
         })
     },
     insertIntoBridgeTable: (userID, activityID, completeBy, cb) => {
-        console.log("NOW HERE!")
         let statement = "INSERT INTO bridge (userID, activityID, completeByDate) VALUES (?,?,?)"
-        console.log(statement)
         connection.query(statement,[userID, activityID, completeBy], (err, data) => {
             if (err) throw err
             cb(data)
         })
     },
     selectUser: (userID, cb) => {
-        console.log("UID: " + userID)
         let statement = "SELECT firstName, lastName, userName, zip, lat, lon FROM users WHERE id = '" +  userID + "'"
         connection.query(statement, (err, data) => {
             if (err) throw err
