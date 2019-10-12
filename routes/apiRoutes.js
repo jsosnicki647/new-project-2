@@ -1,5 +1,6 @@
 const db = require("../models");
 const orm = require("../orm")
+const axios = require('axios')
 
 module.exports = function (app) {
   //get top 10 bucket list items
@@ -16,8 +17,12 @@ module.exports = function (app) {
 
   app.get("/api/email/:id", (req, res) => orm.getEmail(req.params.id, (data) => res.json(data)))
   // add new user
-  app.post("/api/adduser", (req, res) => orm.addUser(req.body.id, req.body.firstName, req.body.lastName, req.body.userName, req.body.email, req.body.zip, req.body.lat, req.body.lon, (data) => res.json(data)))
-  
+  app.post("/api/adduser", (req, res) => {
+    var queryURL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + req.body.zip + "&key=AIzaSyAidckZDfScayrad0X24a9nUStcfP_OvHc"
+    axios.get(queryURL)
+    .then((response) => orm.addUser(req.body.id, req.body.firstName, req.body.lastName, req.body.userName, req.body.email, req.body.zip, response.data.results[0].geometry.location.lat.toFixed(3), response.data.results[0].geometry.location.lng.toFixed(3), (data) => res.json(data)))
+  })
+    
 
   // add new item to bucket list
   app.post("/api/newitem", (req, res) => {

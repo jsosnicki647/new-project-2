@@ -4,20 +4,19 @@ const orm = require("../orm")
 module.exports = function(app) {
   // Load index page
 
-  app.get("/", (req, res) => {
+  app.get("/profile/:id", (req, res) => {
     let hbsobj = {}
-    console.log("IDBRUH: " + req.params.id)
     orm.selectAUsersItems(req.params.id, (myItemsData) => {
       hbsobj.myitems = myItemsData
       orm.selectTopTen((topItemsData) => {
         hbsobj.topitems = topItemsData  
         console.log(hbsobj)
-        res.render("index", hbsobj)
+        res.render("profile", hbsobj)
       })
     })
   })
 
-  app.get("/d", (req, res) => res.render("login",{}))
+  app.get("/", (req, res) => res.render("login",{}))
     
   // app.get("/profile", (req, res) => res.sendFile(path.join(__dirname,"../public/profile.html")))
 

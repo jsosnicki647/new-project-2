@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Bucket Besties</title>
+    <link href="/css/reset.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
@@ -22,11 +23,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/6.3.5/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-firestore.js"></script>
-    <script src="https://cdn.firebase.com/libs/geofire/5.0.1/geofire.min.js"></script>
+    
+
     <style>
         
         #jumbo-container{
@@ -36,7 +34,7 @@
             margin: 0 18em;
             opacity: .85;
         }
-        #hide{
+        #sign-up-creds{
             display: none;
         }
         .more-margin{
@@ -59,163 +57,48 @@
 </head>
 
 <body>
-    <script src="../../public/js/app.js"></script>
-    
-    
-    
-    
-    
     <div class="jumbotron">
         <div id="jumbo-container">
             <h1 class="display-4 text-center">Bucket Besties!</h1>
             <p class="lead text-center">Grab a bestie and explore the world... before it's too late!</p>
             <p id="username" class="text-center"></p>
+            <p id="log-out-p" class="text-center"><a id="log-out" href="#">Log Out</a></p>
         </div>
     </div>
 
     {{{body}}}
 
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.3.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-firestore.js"></script>
+    <script src="https://cdn.firebase.com/libs/geofire/5.0.1/geofire.min.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyD5i1UUd3-n2_0PpSKh0-ZCLVL2pQUsQ0I",
+            authDomain: "bucket-besties.firebaseapp.com",
+            databaseURL: "https://bucket-besties.firebaseio.com",
+            projectId: "bucket-besties",
+            storageBucket: "bucket-besties.appspot.com",
+            messagingSenderId: "90867095766",
+            appId: "1:90867095766:web:a446325a4f2c3709b8d177"
+        }
+        firebase.initializeApp(firebaseConfig)
+        const auth = firebase.auth()
+        const db = firebase.firestore()
+    </script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/profile.js"></script>
 </body>
-<script src="../../public/js/app.js"></script>
 <script>
 
-const firebaseConfig = {
-        apiKey: "AIzaSyD5i1UUd3-n2_0PpSKh0-ZCLVL2pQUsQ0I",
-        authDomain: "bucket-besties.firebaseapp.com",
-        databaseURL: "https://bucket-besties.firebaseio.com",
-        projectId: "bucket-besties",
-        storageBucket: "bucket-besties.appspot.com",
-        messagingSenderId: "90867095766",
-        appId: "1:90867095766:web:a446325a4f2c3709b8d177"
-    }
-
-
-
-
-    $(document).ready(() => {
-
-    firebase.initializeApp(firebaseConfig)
-    const auth = firebase.auth()
-
-    var uid
     
-    firebase.auth().onAuthStateChanged((firebaseUser) => {
-        if (firebaseUser) {
-            console.log(firebaseUser)
-            uid = firebaseUser.uid
-        }
-        else{
-            console.log("not logged in")
-        }
-    })
-        $("#check").on("click", () => {
-            if (document.getElementById("check").checked){
-                $("#hide").show()
-            }
-            else{
-                $("#hide").hide()
-            }
-        })
-
-        $("#signup-login").on("click", (e) => {
-            e.preventDefault()
-            let email = $("#input-email").val()
-            let password = $("#input-password").val()
-            let success = true
-
-            if (document.getElementById("check").checked){
-                const promise = auth.createUserWithEmailAndPassword(email, password)
-                promise.catch((e) => {
-                    console.log(e.code)
-                })
-
-                var queryURL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + $("#zip") + "&key=AIzaSyAidckZDfScayrad0X24a9nUStcfP_OvHc"
-
-                $.ajax({
-                    url: queryURL,
-                    method: "GET"
-                })
-                .then((response) => {
-                    var lat = response.results[0].geometry.location.lat
-                    var lng = response.results[0].geometry.location.lng
-                    register(lat, lng)
-                })
-            }
-            else{
-                const promise = auth.signInWithEmailAndPassword(email, password)
-                promise.catch((e) => {
-                    console.log(e.code)
-                })
-                login()
-            }
-        })
-
-        function login(){
-            $.get("/profile/" + uid, () => window.location.href += "profile/" + uid)
-            $.get("api/user/" + uid, (data) => console.log(data))
-        }
-
-
-        function register(lat, lng) {
-            let newUser = {
-                id: uid,
-                firstName: $("#first-name").val().trim(),
-                lastName: $("#last-name").val().trim(),
-                userName: $("#user-name").val().trim(),
-                email: $("#input-email").val(),
-                zip: $("#zip").val().trim(),
-                lat: lat.toFixed(3),
-                lon: lng.toFixed(3)
-            }
-            
-            $.post("/api/adduser", newUser, (data) => {
-                console.log("UID HERE: " + uid)
-                $.get("/profile/" + uid, () => window.location.href += "profile/" + uid)
-                $.get("/api/user/" + uid, (data) => console.log("DATA: " + data))
-            })
-
-            
-        }
-
-        $("#check").on("click", () => {
-            if ($("#signup-login").html() == "Log In"){
-                $("#signup-login").html("Sign Up")
-            }
-            else{
-                $("#signup-login").html("Log In")
-            }
-        })
 
         
 
         
 
-        $(".complete").on("click", (e) => {
-            let id = $(e.target).data("id")
-            $.put('/api/complete', {
-                'userID': uid,
-                'activityID': id,
-
-            }, (result) => {
-                console.log(result)
-                location.reload()
-            })
-        })
-
-        function _ajax_request(url, data, callback, method) {
-            return jQuery.ajax({
-                url: url,
-                type: method,
-                data: data,
-                success: callback
-            })
-        }
-
-        jQuery.extend({
-            put: function (url, data, callback) {
-                return _ajax_request(url, data, callback, 'PUT')
-            }
-        })
 
         $(".add-item-btn").on("click", () => {
             $("#results-modal").modal("toggle")
@@ -225,69 +108,10 @@ const firebaseConfig = {
             $("#datepicker").datepicker()
         })
 
-        $("#new-item-submit").on("click", (e) => {
-            e.preventDefault()
-            let date = $("#datepicker").val().trim()
-            let deadline = date.substring(6,10) + "-" + date.substring(0,2) + "-" + date.substring(3,5)
+        
+       
 
-            let newItem = {
-                userid: uid,
-                item: $("#item-input").val().trim(),
-                type: $("#category-select").val().trim(),
-                deadline: deadline
-            }
-            console.log(newItem)
-            $.post("/api/newitem", newItem, (data) => {
-                console.log(data)
-                $("#results-modal").modal("toggle")
-                location.reload()
-            })
-        })
-
-        $(".find-friend").on("click", (e) => {
-            let id = $(e.target).data("id")
-            var activity = $(e.target).data("activity")
-            console.log("ACTIVITYID: " + id)
-            $("#friends").html("")
-            $.ajax({
-                url:"/api/nearbyusers/" + uid + "/" + id,
-                method: "GET"
-            }).then((result) => {
-                if(result.length == 0){
-                    let html = "No friends found!"
-                    $("#friends").append(html)
-                }
-                else{
-                    for (i=0; i<result.length; i++){
-                        let html = '<li><button data-activity="' + activity + '" data-user="' + result[i].userName + '" class="more-margin contact btn btn-info btn-sm">Contact </button>' + result[i].userName + ": " + result[i].distance.toFixed(2) + ' miles </li>'
-                        $("#friends").append(html)
-                    }
-                    $(".contact").on("click", (e) => {
-                        e.preventDefault()
-                        $("#friends-modal").modal("toggle")
-                        $("#contact-modal").modal("toggle")
-                        let friend = $(e.target).data("user")
-                        $("#to-friend").val(friend)
-                        $("#interest").val($(e.target).data("activity"))
-                    })
-                }
-                $("#friends-modal").modal("toggle")
-            })
-        })
-
-        $(".add-from-pop").on("click", (e) => {
-            let newItem = {
-                userid: uid,
-                item: $(e.target).data("activity"),
-                type: $(e.target).data("category"),
-                deadline: "2019-12-31"
-            }
-
-            $.post("/api/newitem", newItem, (data) => {
-                console.log(data)
-                location.reload()
-            })
-        })
+        
         
         $("#send-email").on("click", (e) => {
             e.preventDefault()
@@ -317,7 +141,7 @@ const firebaseConfig = {
             })
         })
 
-    })
+    
 
 </script>
 
