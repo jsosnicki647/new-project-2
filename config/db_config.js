@@ -8,7 +8,7 @@ else{
   host: "localhost",
   port: process.env.PORT || 3306,
   user: "root",
-  password: "Jeannie63",
+  password: "password",
   database: "bucket_besties_db"
 });
 }
