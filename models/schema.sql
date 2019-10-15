@@ -11,6 +11,7 @@ email varchar(50) not null,
 lat decimal(5,3) not null,
 lon decimal(5,3) not null,
 zip char(5) not null,
+createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 primary key(id)
 );
 
@@ -18,6 +19,7 @@ create table Activities(
 id int auto_increment,
 activityDescription varchar(100) not null,
 category varchar(50) not null,
+createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 primary key(id)
 );
 
@@ -28,6 +30,7 @@ activityID int not null,
 completeByDate date,
 completed boolean default false,
 completedOnDate date,
+createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 primary key(id)
 );
 
