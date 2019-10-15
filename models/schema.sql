@@ -2,7 +2,7 @@ create database bucket_besties_db;
 
 use bucket_besties_db;
 
-create table users(
+create table Users(
 id varchar(100),
 firstName varchar(100) not null,
 lastName varchar(100) not null,
@@ -14,14 +14,14 @@ zip char(5) not null,
 primary key(id)
 );
 
-create table activities(
+create table Activities(
 id int auto_increment,
 activityDescription varchar(100) not null,
 category varchar(50) not null,
 primary key(id)
 );
 
-create table bridge(
+create table Bridge(
 id int auto_increment,
 userID varchar(100) not null,
 activityID int not null,
