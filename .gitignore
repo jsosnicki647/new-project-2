@@ -101,4 +101,4 @@ public
 .tern-port
 
 node_modules
-.env
+.envnode_modules node_modules
