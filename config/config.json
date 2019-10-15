@@ -12,7 +12,6 @@
     "database": "bucket_besties_db",
     "host": "localhost",
     "dialect": "mysql"
-    
   },
   "production": {
     "use_env_variable": "JAWSDB_URL",
