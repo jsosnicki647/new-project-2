@@ -4,7 +4,13 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "client-install": "npm install --prefix public",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix public",
+    "dev": "concurrently\"npm run server\" \"npm run public\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix public && npm run build --prefix public"
+    
   },
   "repository": {
     "type": "git",
