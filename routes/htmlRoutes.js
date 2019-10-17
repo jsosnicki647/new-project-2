@@ -53,7 +53,7 @@ app.post("/form", (req, res) => {
   
       auth: {
           user: "bucketlistusa271@gmail.com",
-          pass: "bucketlist123456789"
+          pass: process.env.EMAIL_PW
       }
   });
   
