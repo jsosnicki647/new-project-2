@@ -25,7 +25,7 @@ Handlebars.registerHelper("inc", function(value, options)
 // Routes
 require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);
-
+app.get("/", (req, res) => res.render("login",{}))
 var syncOptions = { force: false };
 
 // If running a test, set syncOptions.force to true

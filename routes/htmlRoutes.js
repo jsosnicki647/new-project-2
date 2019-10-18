@@ -16,7 +16,7 @@ module.exports = function(app) {
     })
   })
 
-  app.get("/", (req, res) => res.render("login",{}))
+  
     
 
   // Render 404 page for any unmatched routes
