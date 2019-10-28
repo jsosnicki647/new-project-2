@@ -24,7 +24,7 @@ $(document).ready(() => {
                 .then((cred) => {
                     const id = cred.user.uid
                     console.log(cred)
-                    login(id)
+                    // login(id)
                 })
         }
     })
