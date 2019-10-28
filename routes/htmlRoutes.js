@@ -26,10 +26,6 @@ module.exports = function(app) {
   });
 
 
-
-
-
-
 // nodemailer
 
 app.post("/form", (req, res) => {

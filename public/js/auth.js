@@ -23,6 +23,7 @@ $(document).ready(() => {
             auth.signInWithEmailAndPassword(email, password)
                 .then((cred) => {
                     const id = cred.user.uid
+                    console.log(cred)
                     login(id)
                 })
         }
