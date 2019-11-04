@@ -2,7 +2,7 @@ const connection = require("./config/db_config")
 
 const orm = {
     selectTopTen: (cb) => {
-        let statement = "SELECT a.activityDescription, a.category, COUNT(activityID) as 'count', b.activityID FROM bridge as b LEFT JOIN activities as a on b.activityID = a.ID GROUP BY activityID ORDER BY 3 DESC, 1 ASC LIMIT 10"
+        let statement = "SELECT a.activityDescription, a.category, COUNT(activityID) as 'count', b.activityID FROM Bridge as b LEFT JOIN Activities as a on b.activityID = a.ID GROUP BY activityID ORDER BY 3 DESC, 1 ASC LIMIT 10"
         connection.query(statement, (err, data) => {
             if (err) throw err
             cb(data)
@@ -16,14 +16,14 @@ const orm = {
         })
     },
     insertIntoBridgeTable: (userID, activityID, completeBy, cb) => {
-        let statement = "INSERT INTO bridge (userID, activityID, completeByDate) VALUES (?,?,?)"
+        let statement = "INSERT INTO Bridge (userID, activityID, completeByDate) VALUES (?,?,?)"
         connection.query(statement,[userID, activityID, completeBy], (err, data) => {
             if (err) throw err
             cb(data)
         })
     },
     selectUser: (userID, cb) => {
-        let statement = "SELECT firstName, lastName, userName, zip, lat, lon FROM users WHERE id = '" +  userID + "'"
+        let statement = "SELECT firstName, lastName, userName, zip, lat, lon FROM Users WHERE id = '" +  userID + "'"
         connection.query(statement, (err, data) => {
             if (err) throw err
             cb(data)
@@ -34,7 +34,7 @@ const orm = {
             console.log("data" + data1)
             let userLat = data1[0].lat
             let userLon = data1[0].lon
-            let statement = "SELECT userName, lat, lon, zip FROM users WHERE id in (SELECT userID FROM bridge WHERE activityID = " + activityID + " AND userID != '" + userID + "')"
+            let statement = "SELECT userName, lat, lon, zip FROM Users WHERE id in (SELECT userID FROM Bridge WHERE activityID = " + activityID + " AND userID != '" + userID + "')"
 
             connection.query(statement, (err, data2) => {
                 if (err) throw err
@@ -47,14 +47,14 @@ const orm = {
         })
     },
     getEmail: (userName, cb) => {
-        let statement = "SELECT firstName, email FROM users WHERE userName = '" + userName + "'"
+        let statement = "SELECT firstName, email FROM Users WHERE userName = '" + userName + "'"
         connection.query(statement, (err, data) => {
             if (err) throw err
             cb(data)
         })
     },
     addUser: (id, fname, lname, uname, email, zip, lat, lon, cb) => {
-        let statement = "INSERT INTO users(id, firstName, lastName, userName, email, lat, lon, zip) VALUES ('" + id + "', '" + fname + "', '" + lname + "', '" + uname + "', '" + email + "', " + lat + ", " + lon + ", '" + zip +"')"
+        let statement = "INSERT INTO Users(id, firstName, lastName, userName, email, lat, lon, zip) VALUES ('" + id + "', '" + fname + "', '" + lname + "', '" + uname + "', '" + email + "', " + lat + ", " + lon + ", '" + zip +"')"
 
         connection.query(statement, (err, data) => {
             if (err) throw err
