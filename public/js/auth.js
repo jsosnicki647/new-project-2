@@ -51,7 +51,7 @@ $(document).ready(() => {
         }
 
         $.post("/api/adduser/", newUser, (data) => console.log(data))
-            .then(login(id))
+            // .then(login(id))
     }
 
     function login(id) {
