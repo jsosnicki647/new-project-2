@@ -39,7 +39,7 @@ module.exports = function (app) {
         //add new item to activities table if not already present
         if (data1.length == 0) {
           db.Activities.create({
-              id: 0,
+              id: NULL,
               activityDescription: req.body.item,
               category: req.body.type
             })
