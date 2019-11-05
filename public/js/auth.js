@@ -51,14 +51,16 @@ $(document).ready(() => {
         }
 
         $.post("/api/adduser/", newUser, (data) => console.log(data))
-            // .then(login(id))
+            .then(login(id))
     }
 
     function login(id) {
-        $.get("/profile/" + id, () => window.location.href += "profile/" + id)
+        $.get("/profile/" + id)
             .then($.get("/api/user/" + id, ((data) => {
-                $("#username").html("Welcome " + data[0].userName)
+                console.log(data)
                 $("#log-out-p").hide()
+                window.location.href += "profile/" + id
+                $("#username").html("Welcome " + data[0].userName)
             })))
     }
 })

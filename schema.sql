@@ -24,7 +24,7 @@ primary key(id)
 );
 
 create table Bridge(
-id int auto_increment,
+id int NOT NULL AUTO_INCREMENT,
 userID varchar(100) not null,
 activityID int not null,
 completeByDate date,

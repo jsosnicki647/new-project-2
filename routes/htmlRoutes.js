@@ -10,7 +10,7 @@ module.exports = function(app) {
       hbsobj.myitems = myItemsData
       orm.selectTopTen((topItemsData) => {
         hbsobj.topitems = topItemsData  
-        console.log(hbsobj)
+        // console.log(hbsobj)
         res.render("profile", hbsobj)
       })
     })

@@ -11,7 +11,10 @@ module.exports = function (app) {
   app.get("/api/useritems", (req, res) => orm.selectAUsersItems(req.body.userID, req.body.isComplete, (data) => res.json(data)))
 
   //get data for a specific user
-  app.get("/api/user/:id", (req, res) => orm.selectUser(req.params.id, (data) => res.json(data)))
+  app.get("/api/user/:id", (req, res) => orm.selectUser(req.params.id, (data) => {
+    console.log("HI", data)
+    res.json(data)
+  }))
 
   //find nearby users with one of your bucket list items
   app.get("/api/nearbyusers/:uID/:aID", (req, res) => orm.nearbyUsersWithSameInterests(req.params.uID, req.params.aID, (data) => res.json(data))) 
@@ -36,6 +39,7 @@ module.exports = function (app) {
         //add new item to activities table if not already present
         if (data1.length == 0) {
           db.Activities.create({
+              id: 0,
               activityDescription: req.body.item,
               category: req.body.type
             })
