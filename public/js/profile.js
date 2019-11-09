@@ -9,6 +9,7 @@ $(document).ready(() => {
   })
 
   $(function () {
+    console.log("CLICKED")
     $("#datepicker").datepicker()
   })
 

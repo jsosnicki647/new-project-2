@@ -55,8 +55,21 @@ const orm = {
     },
     addUser: (id, fname, lname, uname, email, zip, lat, lon, cb) => {
         let statement = "INSERT INTO Users(id, firstName, lastName, userName, email, lat, lon, zip) VALUES ('" + id + "', '" + fname + "', '" + lname + "', '" + uname + "', '" + email + "', " + lat + ", " + lon + ", '" + zip +"')"
-
         connection.query(statement, (err, data) => {
+            if (err) throw err
+            cb(data)
+        })
+    },
+    insertActivity: (description, category, cb) => {
+        const statement = "INSERT INTO Activities(activityDescription, category) VALUES(?,?)"
+        connection.query(statement, [description, category], (err, data) => {
+            if (err) throw err
+            cb(data)
+        })
+    },
+    findActivity: (activity, cb) => {
+        const statement = "SELECT * FROM Activities WHERE activityDescription=?"
+        connection.query(statement, [activity], (err, data) => {
             if (err) throw err
             cb(data)
         })
