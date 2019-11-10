@@ -109,6 +109,7 @@ $(document).ready(() => {
     let aid = $(e.target).data("id")
     let activity = $(e.target).data("activity")
     $("#friends").html("")
+    console.log("ID: ", id)
 
     $.ajax({
         url: "/api/nearbyusers/" + id + "/" + aid,

@@ -27,9 +27,9 @@ create table Bridge(
 id int NOT NULL AUTO_INCREMENT,
 userID varchar(100) not null,
 activityID int not null,
-completeByDate date,
+completeByDate char(10),
 completed boolean default false,
-completedOnDate date,
+completedOnDate char(10),
 createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 primary key(id)
 );

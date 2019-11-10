@@ -1,5 +1,5 @@
-var db = require("../models");
-var path = require("path")
+// var db = require("../models");
+// var path = require("path")
 const orm = require("../orm")
 module.exports = function(app) {
   // Load index page
@@ -31,7 +31,7 @@ module.exports = function(app) {
 app.post("/form", (req, res) => {
 
   var email = req.body.email;
-  var message = req.body.message
+  // var message = req.body.message
   var name = req.body.name;
   
   console.log("email: " + email, "name: " + name)

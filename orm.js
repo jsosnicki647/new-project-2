@@ -23,15 +23,17 @@ const orm = {
         })
     },
     selectUser: (userID, cb) => {
+        console.log("USERID: ", userID)
         let statement = "SELECT firstName, lastName, userName, zip, lat, lon FROM Users WHERE id = '" +  userID + "'"
         connection.query(statement, (err, data) => {
             if (err) throw err
+            console.log("SELECTUSERDATA: ", data)
             cb(data)
         })
     },
     nearbyUsersWithSameInterests: (userID, activityID, cb) => {
         orm.selectUser(userID, (data1) => {
-            console.log("data" + data1)
+            console.log("NEARBY" + data1)
             let userLat = data1[0].lat
             let userLon = data1[0].lon
             let statement = "SELECT userName, lat, lon, zip FROM Users WHERE id in (SELECT userID FROM Bridge WHERE activityID = " + activityID + " AND userID != '" + userID + "')"
@@ -56,6 +58,7 @@ const orm = {
     addUser: (id, fname, lname, uname, email, zip, lat, lon, cb) => {
         let statement = "INSERT INTO Users(id, firstName, lastName, userName, email, lat, lon, zip) VALUES ('" + id + "', '" + fname + "', '" + lname + "', '" + uname + "', '" + email + "', " + lat + ", " + lon + ", '" + zip +"')"
         connection.query(statement, (err, data) => {
+            console.log("ADDUSERDATA: ", data)
             if (err) throw err
             cb(data)
         })
@@ -70,6 +73,13 @@ const orm = {
     findActivity: (activity, cb) => {
         const statement = "SELECT * FROM Activities WHERE activityDescription=?"
         connection.query(statement, [activity], (err, data) => {
+            if (err) throw err
+            cb(data)
+        })
+    },
+    updateBridge: (today, userID, activityID, cb) => {
+        const statement = "UPDATE Bridge SET completed=1, completedOnDate=? WHERE userID = ? AND activityID = ?"
+        connection.query(statement, [today, userID, activityID], (err, data) => {
             if (err) throw err
             cb(data)
         })

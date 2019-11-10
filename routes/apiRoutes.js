@@ -1,4 +1,4 @@
-const db = require("../models");
+// const db = require("../models");
 const orm = require("../orm")
 const axios = require('axios')
 require('dotenv').config()
@@ -56,19 +56,7 @@ module.exports = function (app) {
     let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     let yyyy = today.getFullYear();
     today = yyyy + '-' + mm + '-' + dd;
-    db.Bridge.update({
-        completed: 1,
-        completedOnDate: today
-      }, {
-        where: {
-          userID: req.body.userID,
-          activityID: req.body.activityID
-        }
-      })
-      .then((data) => {
-        console.log("today: " + today)
-        res.json(data)
-      })
+    orm.updateBridge(today, req.body.userID, req.body.activityID, (data) => res.json(data))
   })
 
 }
