@@ -32,16 +32,16 @@ module.exports = function (app) {
   app.post("/api/newitem", (req, res) => {
     orm.findActivity(req.body.item, (data1) => {
       //add new item to activities table if not already present
-      console.log("HI")
       if (data1.length == 0) {
         orm.insertActivity(req.body.item, req.body.type, (data2) => {
           console.log("DATA2", data2)
           newActivityID = data2.insertId
-          console.log("NEWACTIVY", newActivityID)
+          console.log("NEWACTIVITY", newActivityID)
           orm.insertIntoBridgeTable(req.body.userid, newActivityID, req.body.deadline, (data) => res.json(data))
         })
       } else {
-        activityID = data1.inserId
+        console.log("DATA1: ", data1)
+        activityID = data1[0].id
         console.log("ACTIVITYID", activityID)
         orm.insertIntoBridgeTable(req.body.userid, activityID, req.body.deadline, (data) => res.json(data))
       }
