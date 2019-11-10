@@ -41,10 +41,6 @@ module.exports = function (app) {
           orm.insertIntoBridgeTable(req.body.userid, newActivityID, req.body.deadline, (data) => res.json(data))
         })
       } else {
-        console.log("+++++++++++++++++")
-        console.log(data1[0].id)
-        console.log(req.body.userid)
-        console.log(req.body.deadline)
         activityID = data1.inserId
         orm.insertIntoBridgeTable(req.body.userid, activityID, req.body.deadline, (data) => res.json(data))
       }
