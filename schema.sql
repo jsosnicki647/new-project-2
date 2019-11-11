@@ -1,5 +1,5 @@
 create database bucket_besties_db;
-
+-- deploy
 use bucket_besties_db;
 
 create table Users(
