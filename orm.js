@@ -33,7 +33,7 @@ const orm = {
     },
     nearbyUsersWithSameInterests: (userID, activityID, cb) => {
         orm.selectUser(userID, (data1) => {
-            console.log("NEARBY" + data1)
+            console.log("NEARBY" + data1[0])
         
             let userLon = data1[0].lon
             let statement = "SELECT userName, lat, lon, zip FROM Users WHERE id in (SELECT userID FROM Bridge WHERE activityID = " + activityID + " AND userID != '" + userID + "')"
