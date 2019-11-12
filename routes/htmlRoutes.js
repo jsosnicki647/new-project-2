@@ -36,9 +36,9 @@ app.post("/form", (req, res) => {
   
   console.log("email: " + email, "name: " + name)
   
-  const output =`<p> You have a new contact request </p>
+  const output =`<p> You have a new contact request!</p>
       <P> 😎Thank you for joing the squad 😎</p>
-      <p>From: ${req.body.fromUser}</p>
+      <p>From: ${req.body.name}</p>
       <p>Interest: ${req.body.interest}</p>
       <p>${req.body.message}</p>
       </ul>`;
@@ -59,7 +59,7 @@ app.post("/form", (req, res) => {
   let mailoptions  = {
       from: "bucketlistusa271@gmail.com", // sender address
       to: `${email}`, // list of receivers
-      subject: 'registration ✔', // Subject line
+      subject: 'connection request', // Subject line
       text: `Hey ${name}`, // plain text body
       html: output
   };
