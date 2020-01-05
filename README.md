@@ -8,4 +8,4 @@ Users add activities to their bucket list that they wish to accomplish. The top 
 
 deployed site: https://evening-badlands-89202.herokuapp.com/
 
-![alt text](https://github.com/jsosnicki647/Bootstrap-Portfolio/blob/master/assets/images/BucketBesties.JPG)
+https://github.com/jsosnicki647/Bootstrap-Portfolio/blob/master/assets/images/BucketBesties.JPG
