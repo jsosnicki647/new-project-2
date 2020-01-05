@@ -3,6 +3,7 @@
 Add items to your bucket list and stay on track by assigning a due date. Find others with the same interests in your area to make new friends.
 
 ![Bucket Besties](https://github.com/jsosnicki647/Bootstrap-Portfolio/blob/master/assets/images/BucketBesties.JPG)
+
 deployed site: https://evening-badlands-89202.herokuapp.com/
 
 Technologies: JavaScript, Handlebars, Bootstrap, JQuery, JQuery datetimepicker, MySQL, Express, Node.js, Nodemailer, Google Geocode API, Firebase Authentication
